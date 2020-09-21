@@ -41,7 +41,7 @@ public class AnimalTest {
     }
 
     /**
-     * Tests Incessant Speakable of the Cat class.
+     * Tests speak method of the Dog class.
      */
     @Test
     public void testDogSpeak() {
