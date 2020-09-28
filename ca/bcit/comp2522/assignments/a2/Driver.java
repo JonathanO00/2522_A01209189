@@ -11,6 +11,7 @@ public class Driver {
     public static void main(final String[] args) {
         Scanner scan = new Scanner(System.in);
         Ecosystem e = new Ecosystem();
+        e.reset();
         e.setupSimulation();
         System.out.println("How many weeks would you like to run?");
         e.simulate(scan.nextInt());
