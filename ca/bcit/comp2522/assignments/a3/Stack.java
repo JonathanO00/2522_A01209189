@@ -50,8 +50,7 @@ public class Stack {
         if (this.unused() == 0) {
             throw new StackOverflowException();
         } else {
-            stackValues[count] = value;
-            count++;
+            stackValues[count++] = value;
         }
     }
 
@@ -77,7 +76,7 @@ public class Stack {
             throw new StackUnderflowException(
                     "Cannot call Stack.peek() on an empty stack!");
         } else {
-            return stackValues[count];
+            return stackValues[count - 1];
         }
     }
 

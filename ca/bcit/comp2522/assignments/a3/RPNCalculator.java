@@ -3,13 +3,18 @@ package ca.bcit.comp2522.assignments.a3;
 import java.util.Scanner;
 
 public class RPNCalculator {
-    /** Minimum stack size. */
-    private static final int MIN_STACK_SIZE = 2;
-    /** The stack. */
+    /**
+     * Minimum stack size.
+     */
+    public static final int MIN_STACK_SIZE = 2;
+    /**
+     * The stack.
+     */
     private Stack stack;
 
     /**
      * Calculator constructor.
+     *
      * @param stackSize
      */
     public RPNCalculator(final int stackSize) {
@@ -23,7 +28,10 @@ public class RPNCalculator {
     /**
      * Processes formula.
      * @param formula
-     * @return
+     * @return Result.
+     * @throws StackOverflowException
+     * @throws StackUnderflowException
+     * @throws InvalidOperationTypeException
      */
     public int processFormula(final String formula)
             throws StackOverflowException,
@@ -36,9 +44,10 @@ public class RPNCalculator {
 
             while (scan.hasNext()) {
                 if (scan.hasNextInt()) {
-                    push(scan.nextInt());
+                    this.push(scan.nextInt());
                 } else {
-                    Operation o = getOperation((scan.next());
+                    Operation o = getOperation(scan.next().charAt(0));
+                    this.perform(o);
                 }
             }
         }
@@ -46,7 +55,12 @@ public class RPNCalculator {
         return getResult();
     }
 
-    private void push(final int operand) throws StackOverflowException {
+    /**
+     * Pushes int onto stack.
+     * @param operand
+     * @throws StackOverflowException
+     */
+    public void push(final int operand) throws StackOverflowException {
         if (stack.unused() == 0) {
             throw new StackOverflowException("Stack is full!");
         } else {
@@ -54,6 +68,12 @@ public class RPNCalculator {
         }
     }
 
+    /**
+     * Gets operation.
+     * @param symbol
+     * @return operation.
+     * @throws InvalidOperationTypeException
+     */
     private Operation getOperation(final char symbol)
             throws InvalidOperationTypeException {
         switch (symbol) {
@@ -70,6 +90,11 @@ public class RPNCalculator {
         }
     }
 
+    /**
+     * Gets result.
+     * @return result.
+     * @throws StackUnderflowException
+     */
     public int getResult() throws StackUnderflowException {
         if (stack.size() == 0) {
             throw new StackUnderflowException("There are no operands!");
@@ -78,20 +103,34 @@ public class RPNCalculator {
         }
     }
 
-    private void perform(final Operation operation) {
-
+    /**
+     * Performs operation.
+     * @param operation
+     * @throws StackUnderflowException
+     * @throws StackOverflowException
+     */
+    public void perform(final Operation operation)
+            throws StackUnderflowException, StackOverflowException {
+        if (operation == null) {
+            throw new IllegalArgumentException("Operation cannot be null!");
+        } else {
+            int operandB = stack.pop();
+            int operandA = stack.pop();
+            int result = operation.perform(operandA, operandB);
+            stack.push(result);
+        }
     }
 
     /**
      * Drives the program by evaluating the RPN calculation provided as
      * a command line argument.
-     *
+     * <p>
      * Example usage: RPNCalculator 10 "1 2 +"
-     *
+     * <p>
      * Note that the formula MUST be placed inside of double quotes.
      *
      * @param argv - the command line arguments are the size of the Stack
-     *               to be created followed by the expression to evaluate.
+     *             to be created followed by the expression to evaluate.
      */
     public static void main(final String[] argv) {
         // Checks for correct number of command line arguments.
@@ -108,10 +147,14 @@ public class RPNCalculator {
             System.out.println("[" + argv[1] + "] = "
                     + calculator.processFormula(argv[1]));
         } catch (final InvalidOperationTypeException ex) {
-            System.err.println("formula can only contain integers, +, -, *, and /");
+            System.err.println(
+                    "formula can only contain integers, +, -, *, and /");
         } catch (final StackOverflowException ex) {
-            System.err.println("too many operands in the formula, increase the stack size");
+            System.err.println(
+                    "too many operands in the formula, increase stack size");
         } catch (final StackUnderflowException ex) {
-            System.err.println("too few operands in the formula");
+            System.err.println(
+                    "too few operands in the formula");
         }
+    }
 }

@@ -1,5 +1,6 @@
 package assignments202010.a3;
 
+import ca.bcit.comp2522.assignments.a3.*;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

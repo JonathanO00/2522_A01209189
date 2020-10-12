@@ -1,6 +1,17 @@
 package ca.bcit.comp2522.assignments.a3;
 
 public interface Operation {
+    /**
+     * Gets symbol.
+     * @return symbol.
+     */
     char getSymbol();
-    int perform(final int operandA, final int operandB);
+
+    /**
+     * Performs operation.
+     * @param operandA
+     * @param operandB
+     * @return
+     */
+    int perform(int operandA, int operandB);
 }
