@@ -6,17 +6,11 @@ public class Resources {
     private int xCord;
     private int yCord;
     private float playerHealth;
-    private int health;
     private int liveEnemies;
 
     public Resources(final String lname, final int lnum, final int xc,
                      final int yc, final float ph, final int h,
                      final int lenemies) throws Exception {
-        if (h < 0 || h > 100) {
-            throw new Exception("Health must be between 0 and 100.");
-        } else {
-            health = h;
-        }
 
         if (lenemies < 0 || lenemies > 100) {
             throw new Exception("Enemies must be between 0 and 100.");
@@ -49,10 +43,6 @@ public class Resources {
 
     public float getPlayerHealth() {
         return playerHealth;
-    }
-
-    public int getHealth() {
-        return health;
     }
 
     public int getLiveEnemies() {

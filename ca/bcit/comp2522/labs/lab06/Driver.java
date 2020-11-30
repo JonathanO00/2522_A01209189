@@ -16,7 +16,7 @@ public class Driver {
     public static void main(final String[] args) throws Exception {
         //Writing and reading Sprite
         try {
-            BufferedImage img = ImageIO.read(new File("megaman.png"));
+            BufferedImage img = ImageIO.read(new File("src/megaman.png"));
             Sprite s = new Sprite(0, 0, 50, img);
 
             FileOutputStream f = new FileOutputStream("sprite.ser");
@@ -56,7 +56,6 @@ public class Driver {
            out.writeInt(r.getxCord());
            out.writeInt(r.getyCord());
            out.writeFloat(r.getPlayerHealth());
-           out.writeInt(r.getHealth());
            out.writeInt(r.getLiveEnemies());
 
         } catch (Exception e) {
@@ -80,7 +79,6 @@ public class Driver {
                     System.out.println("X coord: " + in.readInt());
                     System.out.println("Y coord: " + in.readInt());
                     System.out.println("Health: " + in.readFloat());
-                    System.out.println("Player health: " + in.readInt());
                     System.out.println("Live enemies: " + in.readInt());
                 }
 
